@@ -20,5 +20,5 @@ app.use(gloablComponent)
 //注册模板路由
 app.use(router)
 //安装仓库
-app.use(pinia)  
+app.use(pinia)
 app.mount('#app')
