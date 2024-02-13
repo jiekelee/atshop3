@@ -8,7 +8,7 @@ export default {
   install(app: App) {
     Object.keys(components).forEach((key: string) => {
       app.component(key, components[key])
-    });
+    })
     //注册element plus提供的所有图标组件
     for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
       app.component(key, component)

@@ -12,10 +12,10 @@ import { UserState } from './types/type'
 
 let useUserStore = defineStore('User', {
   //小仓库，存储数据的地方
-  state: ():UserState => {
+  state: (): UserState => {
     return {
       token: GET_TOKEN(),
-      menuRoutes:constantRoute, //仓库存储生成菜单需要的数组
+      menuRoutes: constantRoute, //仓库存储生成菜单需要的数组
     }
   },
 
