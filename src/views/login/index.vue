@@ -3,7 +3,12 @@
     <el-row>
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
-        <el-form class="login_form" :model="loginForm" :rules="rules" ref="loginForms">
+        <el-form
+          class="login_form"
+          :model="loginForm"
+          :rules="rules"
+          ref="loginForms"
+        >
           <h1>Hello</h1>
           <h2>欢迎来到后台管理系统</h2>
           <el-form-item prop="username">
@@ -38,7 +43,7 @@
 
 <script setup lang="ts" name="login">
 import { User, Lock } from '@element-plus/icons-vue'
-import { reactive,ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 //引入用户相关的小仓库
@@ -83,16 +88,15 @@ const login = async () => {
 }
 
 //自定义检验规则
-const validatorUsername= (rules:any,value:any,callback:any) => {
+const validatorUsername = (rules: any, value: any, callback: any) => {
   //rules是校检规则对象
   //value:表单元素文本内容
   // console.log(callback);
-  if(value.length >4){
+  if (value.length > 4) {
     callback()
-  }else{
+  } else {
     callback(new Error('账号长度至少5位'))
   }
-  
 }
 
 //定义表单检验需要配置的对象
@@ -103,12 +107,12 @@ const rules = {
   //max:文本长度最多多少位
   //message:错误的提示信息
   //trigger:触发校验表单的时机 change->文本发生变化触发校验,blur:失去焦点的时候触发校验规则
-  username:[
+  username: [
     // {required:true,message:'用户不能为空',trigger:'blur'},
     // {required:true,min:5,max:10,message:'账号长度至少6位'}
-    {trigger:'change',validator:validatorUsername}
+    { trigger: 'change', validator: validatorUsername },
   ],
-  password:[]
+  password: [],
 }
 
 //封装一个函数，显示上午中午晚上

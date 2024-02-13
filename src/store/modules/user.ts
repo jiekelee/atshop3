@@ -6,12 +6,16 @@ import { reqLogin } from '@/api/user'
 import { loginForm } from '@/api/user/type'
 //引入操作本地存储的方法
 import { SET_TOKEN, GET_TOKEN } from '@/utils/token'
+//引入路由（常量路由）
+import { constantRoute } from '@/router/routes'
+import { UserState } from './types/type'
 
 let useUserStore = defineStore('User', {
   //小仓库，存储数据的地方
-  state: () => {
+  state: ():UserState => {
     return {
       token: GET_TOKEN(),
+      menuRoutes:constantRoute, //仓库存储生成菜单需要的数组
     }
   },
 
