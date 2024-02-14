@@ -1,26 +1,26 @@
 <template>
   <div class="layout_container">
     <!-- 左侧菜单 -->
-    <div class="layout_slider" :class="{fold:LayOutSettingStore.fold?true:false}">
+    <div class="layout_slider" >
       <Logo />
       <!-- 展示菜单 -->
       <!-- 滚动组件 -->
       <el-scrollbar class="scrollbar">
         <!-- 菜单组件 -->
-        <el-menu :collapse="LayOutSettingStore.fold?true:false" :default-active="$route.path" background-color="#001529" text-color="white"
-          active-text-color="yellowgreen">
+        <el-menu :collapse="LayOutSettingStore.fold ? true : false" :default-active="$route.path"
+          background-color="#001529" text-color="white" active-text-color="yellowgreen">
           <!-- 根据路由动态生态菜单 -->
           <Menu :menuList="userStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
     <!-- 顶部导航 -->
-    <div class="layout_tabbar" :class="{fold:LayOutSettingStore.fold?true:false}">
+    <div class="layout_tabbar" :class="{ fold: LayOutSettingStore.fold ? true : false }">
       <!-- layout组件顶部导航Tabbar -->
       <Tabbar />
     </div>
     <!-- 内容展示区 -->
-    <div class="layout_main" :class="{fold:LayOutSettingStore.fold?true:false}">
+    <div class="layout_main" :class="{ fold: LayOutSettingStore.fold ? true : false }">
       <!-- <router-view></router-view> -->
       <Main></Main>
     </div>
@@ -49,8 +49,8 @@ let $route = useRoute()
 </script>
 
 <script lang="ts">
-export default{
-  name:"Layout"
+export default {
+  name: 'Layout',
 }
 </script>
 
@@ -64,11 +64,7 @@ export default{
     width: $base-menu-width;
     height: 100vh;
     background: $base-menu-background;
-    transition: all .2s;
-    // transition-property: width;
-    // transition-duration: 0.3s;
-
-    // color:white;
+    transition: all 0.2s;    
     .scrollbar {
       width: 100%;
       height: calc(100vh - $base-menu-logo-height);
@@ -77,10 +73,7 @@ export default{
         border-right: none;
       }
     }
-
-    &.fold{
-      width: $base-menu-min-width;
-    }
+    
   }
 
   .layout_tabbar {
@@ -89,10 +82,12 @@ export default{
     height: $base-tabbar-heigth;
     top: 0;
     left: $base-menu-width;
-    transition: all .2s;
-    &.fold{
+    background: white;
+    transition: all 0.2s;
+
+    &.fold {
       width: calc(100vw - $base-menu-min-width);
-      left:$base-menu-min-width;
+      left: $base-menu-min-width;
     }
   }
 
@@ -106,10 +101,11 @@ export default{
     padding: 20px;
     overflow: auto;
     box-sizing: border-box;
-    transition: all .2s;
-    &.fold{
+    transition: all 0.2s;
+
+    &.fold {
       width: calc(100vw - $base-menu-min-width);
-      left:$base-menu-min-width;
+      left: $base-menu-min-width;
     }
   }
 }

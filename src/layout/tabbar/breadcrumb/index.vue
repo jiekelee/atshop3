@@ -3,8 +3,12 @@
     <component :is="LayOutSettingStore.fold ? 'Fold' : 'Expand'"></component>
   </el-icon>
   <el-breadcrumb separator-icon="ArrowRight">
-    <el-breadcrumb-item v-for="(item, index) in $route.matched" :key="index" v-show="item.meta.title != 'layout'"
-      :to="item.path">
+    <el-breadcrumb-item
+      v-for="(item, index) in $route.matched"
+      :key="index"
+      v-show="item.meta.title != 'layout'"
+      :to="item.path"
+    >
       <!-- 图标 -->
       <el-icon>
         <component :is="item.meta.icon" />
@@ -26,12 +30,11 @@ const changeIcon = () => {
   // 图标切换
   LayOutSettingStore.fold = !LayOutSettingStore.fold
 }
-
 </script>
 
 <script lang="ts">
 export default {
-  name: "Breadcrumb"
+  name: 'Breadcrumb',
 }
 </script>
 
