@@ -5,7 +5,7 @@ import { reqLogin, reqUserInfo } from '@/api/user'
 //引入数据类型
 import { loginForm } from '@/api/user/type'
 //引入操作本地存储的方法
-import { SET_TOKEN, GET_TOKEN ,REMOVE_TOKEN} from '@/utils/token'
+import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 //引入路由（常量路由）
 import { constantRoute } from '@/router/routes'
 import { UserState } from './types/type'
@@ -53,13 +53,13 @@ let useUserStore = defineStore('User', {
       }
     },
     // 退出登录
-    userLogout(){
+    userLogout() {
       // 目前没有mock接口，退出登录接口（通知服务器本地用户唯一标识失效）
-      this.token=''
-      this.username=''
-      this.avatar=''
+      this.token = ''
+      this.username = ''
+      this.avatar = ''
       REMOVE_TOKEN()
-    }
+    },
   },
 
   getters: {},

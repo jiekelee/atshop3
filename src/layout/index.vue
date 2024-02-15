@@ -1,26 +1,37 @@
 <template>
   <div class="layout_container">
     <!-- 左侧菜单 -->
-    <div class="layout_slider" >
+    <div class="layout_slider">
       <Logo />
       <!-- 展示菜单 -->
       <!-- 滚动组件 -->
       <el-scrollbar class="scrollbar">
         <!-- 菜单组件 -->
-        <el-menu :collapse="LayOutSettingStore.fold ? true : false" :default-active="$route.path"
-          background-color="#001529" text-color="white" active-text-color="yellowgreen">
+        <el-menu
+          :collapse="LayOutSettingStore.fold ? true : false"
+          :default-active="$route.path"
+          background-color="#001529"
+          text-color="white"
+          active-text-color="yellowgreen"
+        >
           <!-- 根据路由动态生态菜单 -->
           <Menu :menuList="userStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
     <!-- 顶部导航 -->
-    <div class="layout_tabbar" :class="{ fold: LayOutSettingStore.fold ? true : false }">
+    <div
+      class="layout_tabbar"
+      :class="{ fold: LayOutSettingStore.fold ? true : false }"
+    >
       <!-- layout组件顶部导航Tabbar -->
       <Tabbar />
     </div>
     <!-- 内容展示区 -->
-    <div class="layout_main" :class="{ fold: LayOutSettingStore.fold ? true : false }">
+    <div
+      class="layout_main"
+      :class="{ fold: LayOutSettingStore.fold ? true : false }"
+    >
       <!-- <router-view></router-view> -->
       <Main></Main>
     </div>
@@ -64,7 +75,7 @@ export default {
     width: $base-menu-width;
     height: 100vh;
     background: $base-menu-background;
-    transition: all 0.2s;    
+    transition: all 0.2s;
     .scrollbar {
       width: 100%;
       height: calc(100vh - $base-menu-logo-height);
@@ -73,7 +84,6 @@ export default {
         border-right: none;
       }
     }
-    
   }
 
   .layout_tabbar {

@@ -45,7 +45,7 @@
 import useLayOutSettingStore from '@/store/modules/setting'
 // 获取骨架的小仓库
 import useUserStore from '@/store/modules/user'
-import { useRouter,useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router'
 
 let userStore = useUserStore()
 // 获取路由器对象
@@ -75,8 +75,7 @@ const logout = () => {
   // 第三件事：跳转到登录页面
   userStore.userLogout()
   // 跳转到登录页面
-  $router.push({path:'/login',query:{redirect:$route.path}})
-  
+  $router.push({ path: '/login', query: { redirect: $route.path } })
 }
 </script>
 
