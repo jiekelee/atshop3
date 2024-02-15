@@ -1,9 +1,8 @@
 //创建用户相关的小仓库
 import { defineStore } from 'pinia'
 //引入接口
-import { reqLogin, reqUserInfo } from '@/api/user'
-//引入数据类型
-import { loginForm } from '@/api/user/type'
+import { reqLogin, reqUserInfo,reqLogout } from '@/api/user'
+
 //引入操作本地存储的方法
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 //引入路由（常量路由）
@@ -24,15 +23,20 @@ let useUserStore = defineStore('User', {
 
   //异步|逻辑的地方
   actions: {
-    async userLogin(data: loginForm) {
-      let result = await reqLogin(data)
+    async userLogin(data: any) {
+      let result:any = await reqLogin(data)
+      // console.log(result);
+      
       //登录请求：成功200-》token
       //登录请求：失败201-》登录失败错误信息
       if (result.code == 200) {
         //pinia仓库存储token
         //由于pinia|vue存储数据其实利用js对象，并非持久化的
+        
+        
         this.token = result.data.token
-        //本地存储持久化
+        //本地存储持久化        
+        
         SET_TOKEN(result.data.token as string)
         return 'ok'
       } else {
@@ -44,9 +48,12 @@ let useUserStore = defineStore('User', {
       //获取用户信息存储在仓库中,头像，名字
       let result = await reqUserInfo()
       // 如果获取用户信息成功，就存储
+      console.log('get userinfo wrong');
       if (result.code == 200) {
-        this.username = result.data.checkUser.username
-        this.avatar = result.data.checkUser.avatar
+        
+        
+        this.username = result.data.username
+        this.avatar = result.data.avatar
         return 'ok'
       } else {
         return Promise.reject('获取用户信息失败')

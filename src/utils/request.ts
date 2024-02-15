@@ -4,15 +4,17 @@ import { ElMessage } from 'element-plus'
 import useUserStore from '@/store/modules/user'
 //创建axios实例
 let request = axios.create({
-  baseURL: import.meta.env.VITE_APP_BASE_API,
+  baseURL: import.meta.env.VITE_SERVE,
   timeout: 5000,
 })
+
 //请求拦截器
 request.interceptors.request.use((config) => {
   // 获取用户相关小仓库，获取仓库内部token,登录成功以后携带给服务器
   let userStore = useUserStore()
   if (userStore.token) {
-    config.headers.token = userStore.token
+    // config.headers.token = userStore.token
+    config.headers.Authorization = `Bearer ${userStore.token}`
   }
   return config
 })

@@ -25,11 +25,12 @@ router.beforeEach(async (to: any, from: any, next: any) => {
   nprogress.start()
   // 获取token，判断用户登录，还是未登录
   let token = userStore.token
+    
   // 获取用户名字
   let username = userStore.username
   // 用户已登录判断
   if (token) {
-    // 登录成功，访问Login，不能访问，指向首页
+    // 登录成功，不能访问Login，访问login时就指向首页
     if (to.path == '/login') {
       next({ path: '/' })
     } else {
@@ -44,6 +45,7 @@ router.beforeEach(async (to: any, from: any, next: any) => {
           await userStore.userInfo()
           next()
         } catch (error) {
+          console.log(error)
           // token过期，获取不到用户信息
           // 用户手动修改了本地存储的token
           // 退出登录，用户相关的数据清空
