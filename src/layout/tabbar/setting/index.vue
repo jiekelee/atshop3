@@ -1,9 +1,30 @@
 <template>
   <!-- tabbar右侧 -->
-  <el-button type="primary" size="small" @click="updateRefsh" icon="Refresh" circle></el-button>
-  <el-button type="primary" size="small" @click="fullScreen" icon="FullScreen" circle></el-button>
-  <el-button type="primary" size="small" @click="" icon="Setting" circle></el-button>
-  <img :src="userStore.avatar" style="width: 24px; height: 24px; margin: 0 10px; border-radius: 50%" />
+  <el-button
+    type="primary"
+    size="small"
+    @click="updateRefsh"
+    icon="Refresh"
+    circle
+  ></el-button>
+  <el-button
+    type="primary"
+    size="small"
+    @click="fullScreen"
+    icon="FullScreen"
+    circle
+  ></el-button>
+  <el-button
+    type="primary"
+    size="small"
+    @click=""
+    icon="Setting"
+    circle
+  ></el-button>
+  <img
+    :src="userStore.avatar"
+    style="width: 24px; height: 24px; margin: 0 10px; border-radius: 50%"
+  />
   <!-- 下拉菜单 -->
   <el-dropdown>
     <span class="el-dropdown-link">
