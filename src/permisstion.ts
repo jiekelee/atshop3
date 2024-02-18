@@ -25,7 +25,7 @@ router.beforeEach(async (to: any, from: any, next: any) => {
   nprogress.start()
   // 获取token，判断用户登录，还是未登录
   let token = userStore.token
-    
+
   // 获取用户名字
   let username = userStore.username
   // 用户已登录判断
@@ -49,7 +49,7 @@ router.beforeEach(async (to: any, from: any, next: any) => {
           // token过期，获取不到用户信息
           // 用户手动修改了本地存储的token
           // 退出登录，用户相关的数据清空
-          userStore.userLogout()
+          await userStore.userLogout()
           next({ path: '/login', query: { redirect: to.path } })
         }
       }

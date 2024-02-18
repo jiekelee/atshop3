@@ -67,6 +67,7 @@ const login = async () => {
     ElNotification({
       type: 'error',
       message: (error as Error).message,
+      // message: '密码错误',
       // duration:100000
     })
   }

@@ -1,30 +1,9 @@
 <template>
   <!-- tabbar右侧 -->
-  <el-button
-    type="primary"
-    size="small"
-    @click="updateRefsh"
-    icon="Refresh"
-    circle
-  ></el-button>
-  <el-button
-    type="primary"
-    size="small"
-    @click="fullScreen"
-    icon="FullScreen"
-    circle
-  ></el-button>
-  <el-button
-    type="primary"
-    size="small"
-    @click=""
-    icon="Setting"
-    circle
-  ></el-button>
-  <img
-    :src="userStore.avatar"
-    style="width: 24px; height: 24px; margin: 0 10px; border-radius: 50%"
-  />
+  <el-button type="primary" size="small" @click="updateRefsh" icon="Refresh" circle></el-button>
+  <el-button type="primary" size="small" @click="fullScreen" icon="FullScreen" circle></el-button>
+  <el-button type="primary" size="small" @click="" icon="Setting" circle></el-button>
+  <img :src="userStore.avatar" style="width: 24px; height: 24px; margin: 0 10px; border-radius: 50%" />
   <!-- 下拉菜单 -->
   <el-dropdown>
     <span class="el-dropdown-link">
@@ -69,12 +48,13 @@ const fullScreen = () => {
 }
 
 // 退出的回调
-const logout = () => {
+const logout = async () => {
   // 第一件事：需要向服务器发请求【退出登录接口】,正常是要做这一步，但本例的mock中没见这个接口就省了此步
   // 第二件事：仓库中跟用户相关的数据清空【token|username|avatar】
   // 第三件事：跳转到登录页面
-  userStore.userLogout()
+  await userStore.userLogout()
   // 跳转到登录页面
+
   $router.push({ path: '/login', query: { redirect: $route.path } })
 }
 </script>

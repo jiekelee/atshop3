@@ -30,6 +30,7 @@ export default {
   color: white;
   align-items: center;
   padding: 5px;
+  box-sizing:border-box;
   img {
     width: 90px;
     transition: all 0.2s;

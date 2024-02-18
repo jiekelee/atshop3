@@ -4,7 +4,7 @@ import { ElMessage } from 'element-plus'
 import useUserStore from '@/store/modules/user'
 //创建axios实例
 let request = axios.create({
-  baseURL: import.meta.env.VITE_SERVE,
+  baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 5000,
 })
 
