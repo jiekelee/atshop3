@@ -23,7 +23,11 @@
         <el-table-column label="品牌操作">
           <template #="{ row, $index }">
             <el-button type="primary" size="small" icon="Edit" @click="updateTrademark(row)"></el-button>
-            <el-button type="primary" size="small" icon="Delete"></el-button>
+            <el-popconfirm :title="`确认删除:${row.tmName}吗？`" width="200px" icon="Delete" @confirm="removeTrademark(row.id)">
+              <template #reference>
+                <el-button type="primary" size="small" icon="Delete"></el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -44,7 +48,7 @@
   -->
 
     <el-dialog v-model="dialogFormVisible" :title="trademarkParams.id ? '修改品牌' : '添加品牌'">
-      <el-form style="width: 80%;" :model="trademarkParams" :rules="rules" ref="formRef">
+      <el-form style="width: 80%" :model="trademarkParams" :rules="rules" ref="formRef">
         <el-form-item label="品牌名称" label-width="100px" prop="tmName">
           <el-input v-model="trademarkParams.tmName" placeholder="请输入品牌名称"></el-input>
         </el-form-item>
@@ -68,10 +72,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive,nextTick } from 'vue'
+import { ref, onMounted, reactive, nextTick } from 'vue'
 import {
   reqHasTrademark,
   reqAddOrUpdateTrademark,
+  reqDeleteTrademark
 } from '@/api/product/trademark'
 import type {
   Records,
@@ -86,7 +91,7 @@ let pageNo = ref<number>(1)
 let limit = ref<number>(3)
 // 存储已有品牌数据的总数
 let total = ref<number>(0)
-// 已有品牌的数据
+// 当前页已有品牌的数据，只表示一页的品牌数据，而不是所有
 let trademarkArr = ref<Records>([])
 // 控制对话框显示与否
 let dialogFormVisible = ref<boolean>(false)
@@ -176,10 +181,9 @@ async function confirm() {
       })
       dialogFormVisible.value = false
     }
-  }catch(error){
-    console.error('确认操作出错：', error);
+  } catch (error) {
+    console.error('确认操作出错：', error)
   }
-  
 }
 // 上传图片之前触发的钩子
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
@@ -219,7 +223,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 // 品牌自定义校验规则方法
 const validatorTmName = (rule: any, value: any, callBack: any) => {
   // 自定义校验规则
-  if (value.trim().length > 2) {
+  if (value.trim().length > 1) {
     callBack()
   } else {
     callBack(new Error('品牌名称大于两位'))
@@ -240,11 +244,29 @@ const rules = {
   tmName: [
     // required表示此字段必须校验,表单项前基红星号
     // trigger触发校验规则的时机：blur\change
-    { required: true, trigger: 'blur', validator: validatorTmName }
+    { required: true, trigger: 'blur', validator: validatorTmName },
   ],
-  logoUrl: [
-    { required: true, trigger: 'blur', validator: validatorLogoUrl }
-  ]
+  logoUrl: [{ required: true, trigger: 'blur', validator: validatorLogoUrl }],
+}
+// 气泡确认框的回调
+const removeTrademark = async (id:number) => {
+  // 点击确定按钮，发删除已有品牌请求
+  let result = await reqDeleteTrademark(id)
+  if(result.code == 200){
+    ElMessage({
+      type:'success',
+      message:'删除成功'
+    })
+    // 如果当前页的数据大于1条就显示当前页，否定就跳转到上一页
+    getHasTrademark(trademarkArr.value.length>1?pageNo.value:pageNo.value-1)    
+  }else{
+    ElMessage({
+      type:'error',
+      message:'删除失败'
+    })
+  }
+  
+
 }
 </script>
 
