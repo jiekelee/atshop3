@@ -11,10 +11,10 @@ export interface UserState {
 
 // 定义分类仓库state对象的ts 类型
 export interface CategoryState {
-  c1Id: number | string,
-  c1Arr: CategoryObj[],
-  c2Arr: CategoryObj[],
-  c2Id:number | string,
-  c3Arr: CategoryObj[],
-  c3Id:number | string,
+  c1Id: number | string
+  c1Arr: CategoryObj[]
+  c2Arr: CategoryObj[]
+  c2Id: number | string
+  c3Arr: CategoryObj[]
+  c3Id: number | string
 }

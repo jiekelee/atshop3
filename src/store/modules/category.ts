@@ -1,6 +1,6 @@
 // 商品分类全局组件小仓库
 import { defineStore } from 'pinia'
-import { reqC1,reqC2,reqC3 } from '@/api/product/attr'
+import { reqC1, reqC2, reqC3 } from '@/api/product/attr'
 import type { CategoryResponseDate } from '@/api/product/attr/type'
 import type { CategoryState } from './types/type'
 
@@ -10,13 +10,13 @@ let useCategoryStore = defineStore('Category', {
       c1Arr: [],
       c1Id: '',
       // 存储一级分类下对应的二级分类数据
-      c2Arr:[],
+      c2Arr: [],
       // 收集二级分类的id
-      c2Id:'',
+      c2Id: '',
       // 存储二级分类下对应的二级分类数据
-      c3Arr:[],
+      c3Arr: [],
       // 收集三级分类的id
-      c3Id:''
+      c3Id: '',
     }
   },
 
