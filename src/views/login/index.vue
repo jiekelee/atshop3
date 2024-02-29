@@ -56,7 +56,7 @@ let $router = useRouter()
 let $route = useRoute()
 let loginForms = ref()
 
-let loginForm = reactive({ username: 'admin', password: 'admin' })
+let loginForm = reactive({ username: 'admin', password: '111111' })
 
 const login = async () => {
   //点击登录按钮后的动作

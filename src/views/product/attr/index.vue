@@ -179,16 +179,14 @@ watch(
 )
 
 const getAttr = async () => {
-  const { c3Id } = categoryStore
-  let result = await reqAttr(c3Id)
+  const { c1Id,c2Id,c3Id } = categoryStore
+  let result = await reqAttr(c1Id,c2Id,c3Id )
   if (result.code == 200) {
     attrArr.value = result.data
   }
 }
 
-const addAttrValue = () => {
-  // console.log('runing123');
-  // reqAddAttrValue()
+const addAttrValue = () => {  
   attrParams.attrValueList.push({
     valueName: '',
     flag: true, //控制编辑模式与显示模式的切换
@@ -222,10 +220,10 @@ const cancel = () => {
 }
 
 const save = async () => {
-  if (attrParams.id) {
-    let isEdit = true
-    deleteAttr(attrParams.id as number, isEdit)
-  }
+  // if (attrParams.id) {
+  //   let isEdit = true
+  //   deleteAttr(attrParams.id as number, isEdit)
+  // }
 
   let result = await reqAddOrUpdateAttr(attrParams)
   if (result.code == 200) {

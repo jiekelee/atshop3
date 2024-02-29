@@ -36,7 +36,8 @@ const useUserStore = defineStore('User', {
         //pinia仓库存储token
         //由于pinia|vue存储数据其实利用js对象，并非持久化的
 
-        this.token = result.data
+        this.token = result.data        
+        
         //本地存储持久化
         SET_TOKEN(result.data as string)
         return 'ok'
@@ -47,13 +48,19 @@ const useUserStore = defineStore('User', {
     // 获取用户信息的方法
     async userInfo() {
       //获取用户信息存储在仓库中,头像，名字
+      
+      
       const result: userInfoResponseData = await reqUserInfo()
       // 如果获取用户信息成功，就存储
+      console.log(result.code);
+      
       if (result.code == 200) {
+        
         this.username = result.data.name
         this.avatar = result.data.avatar
         return 'ok'
       } else {
+        
         return Promise.reject(new Error(result.data))
       }
     },

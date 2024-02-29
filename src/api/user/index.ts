@@ -6,12 +6,19 @@ import {
   brandData,
 } from './type'
 
-// 项目用户相关的请求地址
+// 项目用户相关的请求地址,本地的API
+// enum API {
+//   LOGIN_URL = '/admin/acl/index/login',
+//   USERINFO_URL = '/admin/acl/index/info',
+//   LOGOUT_URL = '/admin/acl/index/logout',
+//   GETBRAND_URL = 'http://127.0.0.1:3000/addbrand',
+// }
+
 enum API {
   LOGIN_URL = '/admin/acl/index/login',
   USERINFO_URL = '/admin/acl/index/info',
   LOGOUT_URL = '/admin/acl/index/logout',
-  GETBRAND_URL = 'http://127.0.0.1:3000/addbrand',
+  GETBRAND_URL = '',
 }
 
 // 登录接口

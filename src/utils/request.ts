@@ -13,8 +13,9 @@ request.interceptors.request.use((config) => {
   // 获取用户相关小仓库，获取仓库内部token,登录成功以后携带给服务器
   let userStore = useUserStore()
   if (userStore.token) {
-    // config.headers.token = userStore.token
-    config.headers.Authorization = `Bearer ${userStore.token}`
+    config.headers.token = userStore.token
+    // 本地API
+    // config.headers.Authorization = `Bearer ${userStore.token}`
   }
   return config
 })
