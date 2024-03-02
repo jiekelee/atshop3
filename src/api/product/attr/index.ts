@@ -24,7 +24,6 @@ enum API {
   // 删除某个已有的属性
   // DELETEATTR_URL = '/admin/product/deleteattr/',  //本地API
   DELETEATTR_URL = '/admin/product/deleteAttr/',
-  
 }
 
 // 获取一级分类的接口方法
@@ -45,8 +44,14 @@ export const reqC3 = (category2Id: number | string) =>
 // 本地api
 // export const reqAttr = (category3Id: number | string) =>
 //   request.get<any, AttrResponseData>(API.ATTR_URL + `${category3Id}`)
-export const reqAttr = (category1Id:number|string,category2Id:number|string,category3Id:number|string)=>request.get<any,AttrResponseData>(API.ATTR_URL+`${category1Id}/${category2Id}/${category3Id}`)
-
+export const reqAttr = (
+  category1Id: number | string,
+  category2Id: number | string,
+  category3Id: number | string,
+) =>
+  request.get<any, AttrResponseData>(
+    API.ATTR_URL + `${category1Id}/${category2Id}/${category3Id}`,
+  )
 
 // 添加属性的接口方法
 export const reqAddAttr = () => request.post<any, any>(API.ADDATTR_URL)
@@ -61,7 +66,7 @@ export const reqAddOrUpdateAttr = (data: Attr) =>
 
 // 删除一个属性
 export const reqRemoveAttr = (attrId: number) =>
-  request.delete<any, any>(API.DELETEATTR_URL+attrId)
-  // 本地api
+  request.delete<any, any>(API.DELETEATTR_URL + attrId)
+// 本地api
 // export const reqRemoveAttr = (attrId: number, isEdit: boolean) =>
 //   request.delete<any, any>(API.DELETEATTR_URL + `${attrId}/${isEdit}`)

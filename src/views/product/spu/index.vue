@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch,onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import type { SpuData } from '@/api/product/spu/type'
 // 引入分类仓库
 import useCategoryStore from '@/store/modules/category'
@@ -55,19 +55,16 @@ let total = ref<number>(0)
 // 获取子组件实例SpuForm
 let spu = ref<any>()
 
-// onMounted(async()=>{
-//   await reqAllSpuData()
-// })
-
 // 监听三级分类ID变化
-watch(() => categoryStore.c3Id, () => {
-  if (!categoryStore.c3Id) return
-  getHasSpu()
-},
+watch(
+  () => categoryStore.c3Id,
+  () => {
+    if (!categoryStore.c3Id) return
+    getHasSpu()
+  },
 )
 // 获取三级分类下已有的SPU
 const getHasSpu = async (pager = 1) => {
-  
   pageNo.value = pager
   let result: HasSpuResponseData = await reqHasSpu(
     pageNo.value,
@@ -89,18 +86,27 @@ const changeSize = () => {
 const addSpu = () => {
   // 切换为场景1
   scene.value = 1
+  spu.value.initAddSpu(categoryStore.c3Id)
 }
 
 // 子组件spuFrom绑定自定义事件，目前是让子组件通知父组件切换场景为0
-const changeScene = (num: number) => {
+const changeScene = (obj:any) => {
   // 子组件spuForm点击取消，变为场景0，展示已有的SPU
-  scene.value = num
+  scene.value = obj.flag
+  if(obj.params=='update'){
+    getHasSpu(pageNo.value)
+  }else{
+    getHasSpu()
+    console.log(obj.params);
+    
+  }
+
 }
 
-const updateSpu = (row:SpuData) => {
+const updateSpu = (row: SpuData) => {
   scene.value = 1
   // 调用子组件方法，获取完整的已有的SPU数据
-  spu.value.initHasSpuData(row)  
+  spu.value.initHasSpuData(row)
 }
 </script>
 

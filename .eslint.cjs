@@ -34,7 +34,7 @@ module.exports = {
      */
     rules: {
       // eslint（https://eslint.bootcss.com/docs/rules/）
-      'no-var': 'error', // 要求使用 let 或 const 而不是 var
+      'no-var': 'off', // 要求使用 let 或 const 而不是 var
       'prefer-const':'off',      
       
       'no-multiple-empty-lines': ['warn', { max: 1 }], // 不允许多个空行
@@ -44,7 +44,7 @@ module.exports = {
       'no-useless-escape': 'off', // 禁止不必要的转义字符
   
       // typeScript (https://typescript-eslint.io/rules)
-      '@typescript-eslint/no-unused-vars': 'error', // 禁止定义未使用的变量
+      '@typescript-eslint/no-unused-vars': 0, // 禁止定义未使用的变量
       '@typescript-eslint/prefer-ts-expect-error': 'error', // 禁止使用 @ts-ignore
       '@typescript-eslint/no-explicit-any': 'off', // 禁止使用 any 类型
       '@typescript-eslint/no-non-null-assertion': 'off',

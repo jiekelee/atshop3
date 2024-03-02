@@ -179,14 +179,14 @@ watch(
 )
 
 const getAttr = async () => {
-  const { c1Id,c2Id,c3Id } = categoryStore
-  let result = await reqAttr(c1Id,c2Id,c3Id )
+  const { c1Id, c2Id, c3Id } = categoryStore
+  let result = await reqAttr(c1Id, c2Id, c3Id)
   if (result.code == 200) {
     attrArr.value = result.data
   }
 }
 
-const addAttrValue = () => {  
+const addAttrValue = () => {
   attrParams.attrValueList.push({
     valueName: '',
     flag: true, //控制编辑模式与显示模式的切换
