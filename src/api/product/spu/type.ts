@@ -12,7 +12,7 @@ export interface SpuData {
   spuName: string
   description: string
   category3Id: string | number
-  tmId: number|string
+  tmId: number | string
   spuSaleAttrList: null | SpuImg[]
   spuImageList: null | SaleAttr[]
 }
@@ -48,8 +48,8 @@ export interface SpuImg {
   spuId?: number
   imgName?: string
   imgUrl?: string
-  name?:string
-  url?:string
+  name?: string
+  url?: string
 }
 // 已有的SPU照片墙数据类型
 export interface SpuHasImg extends ResponseData {
@@ -62,7 +62,7 @@ export interface SaleAttrValue {
   createTime?: string
   updateTime?: string
   spuId?: number
-  baseSaleAttrId: number|string
+  baseSaleAttrId: number | string
   saleAttrValueName: string
   saleAttrName?: string
   isChecked?: null
@@ -76,11 +76,11 @@ export interface SaleAttr {
   createTime?: string
   updateTime?: string
   spuId?: number
-  baseSaleAttrId: number|string
+  baseSaleAttrId: number | string
   saleAttrName: string
   spuSaleAttrValueList: SpuSaleAttrValueList
-  flag?:boolean
-  saleAttrValue?:string
+  flag?: boolean
+  saleAttrValue?: string
 }
 // SPU已有销售属性接口返回数据TS类型
 export interface SaleAttrResponseData extends ResponseData {
@@ -95,4 +95,32 @@ export interface HasSaleAttr {
 
 export interface HasSaleAttrResponseData extends ResponseData {
   data: HasSaleAttr[]
+}
+
+export interface Attr{
+  attrId:number|string,
+  valueId:number|string  
+}
+
+export interface saleAttr{
+  saleAttrId:number|string,
+  saleAttrValueId:number|string
+}
+
+export interface SkuData{
+  category3Id:string|number,
+  spuId:number|string,
+  tmId:number|string,
+  skuName:string,
+  price:string|number,
+  weight:string|number,
+  skuDesc:string,
+  skuAttrValueList?:Attr[],
+  skuSaleAttrValueList?:saleAttr[],
+  skuDefaultImg:string
+}
+
+// 获取SKU数据接口的TS类型
+export interface SkuInfoData extends ResponseData{
+  data:SkuData[]
 }

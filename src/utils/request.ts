@@ -11,7 +11,7 @@ let request = axios.create({
 //请求拦截器
 request.interceptors.request.use((config) => {
   // 获取用户相关小仓库，获取仓库内部token,登录成功以后携带给服务器
-  let userStore = useUserStore()
+  const userStore = useUserStore()
   if (userStore.token) {
     config.headers.token = userStore.token
     // 本地API
@@ -27,7 +27,7 @@ request.interceptors.response.use(
   (error) => {
     //处理网络错误
     let msg = ''
-    let status = error.response.status
+    const status = error.response.status
     switch (status) {
       case 401:
         msg = 'token过期'

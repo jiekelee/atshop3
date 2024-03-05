@@ -7,6 +7,8 @@ import type {
   SaleAttrResponseData,
   HasSaleAttrResponseData,
   SpuData,
+  SkuData,
+  SkuInfoData
 } from '@/api/product/spu/type'
 
 enum API {
@@ -27,7 +29,13 @@ enum API {
   // 追加一个新的SPU
   ADDSPU_URL = '/admin/product/saveSpuInfo',
   // 更新已有SPU，
-  UPDATESPU_URL = '/admin/product/updateSpuInfo'
+  UPDATESPU_URL = '/admin/product/updateSpuInfo',
+  // 追加一个新增的SKU的请求地址
+  ADDSKU_URL = '/admin/product/saveSkuInfo',
+  // 查看某个已有SPU下全部的售卖SKU
+  SKUINFO_URL = '/admin/product/findBySpuId/',
+  // 删除已有的SPU
+  REMOVESPU_URL = '/admin/product/deleteSpu/'
 }
 
 // 获取某个三级分类下已有的SPU分类数据
@@ -59,11 +67,20 @@ export const reqAllSpuData = () =>
 
 // 添加一个SPU接口,更新一个已有的SPU
 // data,新增的SPU对象|已有的SPU对象
-export const reqAddOrUpdateSpu = (data:SpuData)=>{
+export const reqAddOrUpdateSpu = (data: SpuData) => {
   // 如果SPU对象有id,表示更新已有的SPU
-  if(data.id){
-    return request.post<any,any>(API.UPDATESPU_URL,data)
-  }else{
-    return request.post<any,any>(API.ADDSPU_URL,data)
+  if (data.id) {
+    return request.post<any, any>(API.UPDATESPU_URL, data)
+  } else {
+    return request.post<any, any>(API.ADDSPU_URL, data)
   }
 }
+
+// 添加SKU的请求方法
+export const reqAddSku = (data:SkuData)=>request.post<any,any>(API.ADDSKU_URL,data)
+
+// 获取SKU数据
+export const reqSkuList = (spuId:number|string)=>request.get<any,SkuInfoData>(API.SKUINFO_URL+spuId)
+
+// 删除已有的SPU
+export const reqRemoveSpu = (spuId:number|string)=>request.delete<any,any>(API.REMOVESPU_URL+spuId)
