@@ -8,7 +8,7 @@ import type {
   HasSaleAttrResponseData,
   SpuData,
   SkuData,
-  SkuInfoData
+  SkuInfoData,
 } from '@/api/product/spu/type'
 
 enum API {
@@ -35,7 +35,7 @@ enum API {
   // 查看某个已有SPU下全部的售卖SKU
   SKUINFO_URL = '/admin/product/findBySpuId/',
   // 删除已有的SPU
-  REMOVESPU_URL = '/admin/product/deleteSpu/'
+  REMOVESPU_URL = '/admin/product/deleteSpu/',
 }
 
 // 获取某个三级分类下已有的SPU分类数据
@@ -77,10 +77,13 @@ export const reqAddOrUpdateSpu = (data: SpuData) => {
 }
 
 // 添加SKU的请求方法
-export const reqAddSku = (data:SkuData)=>request.post<any,any>(API.ADDSKU_URL,data)
+export const reqAddSku = (data: SkuData) =>
+  request.post<any, any>(API.ADDSKU_URL, data)
 
 // 获取SKU数据
-export const reqSkuList = (spuId:number|string)=>request.get<any,SkuInfoData>(API.SKUINFO_URL+spuId)
+export const reqSkuList = (spuId: number | string) =>
+  request.get<any, SkuInfoData>(API.SKUINFO_URL + spuId)
 
 // 删除已有的SPU
-export const reqRemoveSpu = (spuId:number|string)=>request.delete<any,any>(API.REMOVESPU_URL+spuId)
+export const reqRemoveSpu = (spuId: number | string) =>
+  request.delete<any, any>(API.REMOVESPU_URL + spuId)
