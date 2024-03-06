@@ -117,9 +117,9 @@ export interface SkuData {
   skuDesc: string
   skuAttrValueList?: Attr[]
   skuSaleAttrValueList?: saleAttr[]
-  skuDefaultImg: string,
-  isSale?:number, //控制商品的上架与下架
-  id?:number
+  skuDefaultImg: string
+  isSale?: number //控制商品的上架与下架
+  id?: number
 }
 
 // 获取SKU数据接口的TS类型
