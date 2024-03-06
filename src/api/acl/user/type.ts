@@ -3,13 +3,13 @@ import type { ResponseData } from '@/api/product/spu/type'
 // 代表一个账号信息的TS类型
 export interface User {
   id?: number
-  createTime: string
-  updateTime: string
+  createTime?: string
+  updateTime?: string
   username?: string
   password?: string
   name?: string
-  phone: string
-  roleName: string
+  phone?: string
+  roleName?: string
 }
 
 // 数组包含全部的用户信息

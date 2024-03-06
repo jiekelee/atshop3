@@ -19,53 +19,19 @@
       <!-- 展示用户信息 -->
       <el-table style="margin: 10px 0" border :data="userArr">
         <el-table-column type="selection" align="center"></el-table-column>
-        <el-table-column
-          label="#"
-          align="center"
-          type="index"
-        ></el-table-column>
+        <el-table-column label="#" align="center" type="index"></el-table-column>
         <el-table-column label="ID" align="center" prop="id"></el-table-column>
-        <el-table-column
-          label="用户名字"
-          align="center"
-          prop="username"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          label="用户名称"
-          align="center"
-          prop="name"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          label="角色"
-          align="center"
-          prop="roleName"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          label="创建时间"
-          align="center"
-          prop="createTime"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          label="更新时间"
-          align="center"
-          prop="updateTime"
-          show-overflow-tooltip
-        ></el-table-column>
+        <el-table-column label="用户名字" align="center" prop="username" show-overflow-tooltip></el-table-column>
+        <el-table-column label="用户名称" align="center" prop="name" show-overflow-tooltip></el-table-column>
+        <el-table-column label="角色" align="center" prop="roleName" show-overflow-tooltip></el-table-column>
+        <el-table-column label="创建时间" align="center" prop="createTime" show-overflow-tooltip></el-table-column>
+        <el-table-column label="更新时间" align="center" prop="updateTime" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" width="280px" align="center">
           <template #="{ row, $index }">
             <el-button type="primary" size="small" icon="User">
               分配角色
             </el-button>
-            <el-button
-              type="primary"
-              size="small"
-              icon="Edit"
-              @click="updateUser"
-            >
+            <el-button type="primary" size="small" icon="Edit" @click="updateUser(row)">
               编辑
             </el-button>
             <el-button type="primary" size="small" icon="Delete">
@@ -75,41 +41,35 @@
         </el-table-column>
       </el-table>
       <!-- 分页器 -->
-      <el-pagination
-        v-model:current-page="pageNo"
-        v-model:page-size="pageSize"
-        :page-sizes="[5, 7, 9]"
-        :background="true"
-        layout="prev, pager, next, jumper,->,total, sizes"
-        :total="total"
-        @current-change="getHasUserInfo"
-        @size-change="handler"
-      />
+      <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[5, 7, 9]"
+        :background="true" layout="prev, pager, next, jumper,->,total, sizes" :total="total"
+        @current-change="getHasUserInfo" @size-change="handler" />
     </el-card>
     <!-- 抽屉 -->
     <el-drawer v-model="drawer">
+
       <template #header>
-        <h4>添加用户</h4>
+        <h4>{{ userParams.id?'更新用户信息':'添加用户' }}</h4>
       </template>
 
       <template #default>
-        <el-form label-width="100px">
-          <el-form-item label="用户姓名">
-            <el-input placeholder="请输入姓名"></el-input>
+        <el-form label-width="100px" :model="userParams" :rules="rules" ref="formRef">
+          <el-form-item label="用户姓名" prop="username">
+            <el-input placeholder="请输入姓名" v-model="userParams.username"></el-input>
           </el-form-item>
-          <el-form-item label="用户昵称">
-            <el-input placeholder="请输入昵称"></el-input>
+          <el-form-item label="用户昵称" prop="name">
+            <el-input placeholder="请输入昵称" v-model="userParams.name"></el-input>
           </el-form-item>
-          <el-form-item label="密码">
-            <el-input placeholder="请输入密码"></el-input>
+          <el-form-item label="密码" prop="password" v-if="!userParams.id">
+            <el-input placeholder="请输入密码" v-model="userParams.password"></el-input>
           </el-form-item>
         </el-form>
       </template>
 
       <template #footer>
         <div style="flex: auto">
-          <el-button>取消</el-button>
-          <el-button type="primary">确定</el-button>
+          <el-button type="primary" @click="cancel">取消</el-button>
+          <el-button type="primary" @click="save">确定</el-button>
         </div>
       </template>
     </el-drawer>
@@ -117,9 +77,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { reqUserInfo } from '@/api/acl/user'
+import { ref, onMounted, reactive, nextTick } from 'vue'
+import { reqUserInfo, reqAddOrUpdateUser } from '@/api/acl/user'
 import type { UserResponseData, Records, User } from '@/api/acl/user/type'
+import { ElMessage } from 'element-plus'
 let pageNo = ref<number>(1)
 let pageSize = ref<number>(5)
 let total = ref<number>(0)
@@ -127,6 +88,12 @@ let total = ref<number>(0)
 let userArr = ref<Records>([])
 // 控制抽屉显示与隐藏
 let drawer = ref<boolean>(false)
+let userParams = reactive<User>({
+  username: '',
+  name: '',
+  password: ''
+})
+
 onMounted(() => {
   getHasUserInfo()
 })
@@ -147,10 +114,76 @@ const handler = () => {
 // 添加用户
 const addUser = () => {
   drawer.value = true
+  Object.assign(userParams, {
+    id:0,
+    username: '',
+    name: '',
+    password: ''
+  })
+  // 清除上一次的错误提示信息,等form加载完后再清除
+  nextTick(() => {
+    formRef.value.clearValidate('username')
+    formRef.value.clearValidate('name')
+    formRef.value.clearValidate('password')
+  })
 }
 const updateUser = (row: User) => {
+   
   drawer.value = true
+  // 存储已收集到的用户信息 
+  Object.assign(userParams,row)
+  // 清除上一次的错误提示信息,等form加载完后再清除
+  nextTick(() => {
+    formRef.value.clearValidate('username')
+    formRef.value.clearValidate('name')
+  })
 }
+const save = async () => {
+  // 表单每一项都通过校验后再执行以下
+  await formRef.value.validate()
+  // 添加新用户|更新已有用户信息
+  let result = await reqAddOrUpdateUser(userParams)
+  if (result.code == 200) {
+    drawer.value = false
+    ElMessage({
+      type: 'success',
+      message: userParams.id ? '更新成功' : '添加成功'
+    })
+    // 新增跳转到第一页，更新留在当前页
+    getHasUserInfo(userParams.id?pageNo.value:1)
+    // 浏览器自动刷新一次，防止修改了自己的账号名
+    window.location.reload()
+  } else {
+    ElMessage({
+      type: 'error',
+      message: userParams.id ? '更新失败' : '添加用户失败'
+    })
+  }
+}
+const cancel = () => {
+  drawer.value = false
+}
+// 检验用户名的函数
+const validatorUsername = (rule: any, value: any, callBack: any) => {
+  if (value.trim().length >= 5) {
+    callBack()
+  } else {
+    callBack(new Error('用户名至少5位'))
+  }
+}
+const validatorname = (rule: any, value: any, callBack: any) => {
+  if (value.trim().length >= 5) {
+    callBack()
+  } else {
+    callBack(new Error('昵称至少5位'))
+  }
+}
+// 表单校验规则对象
+const rules = {
+  username: [{ required: true, trigger: 'blur', validator: validatorUsername }],
+  name: [{ required: true, trigger: 'blur', validator: validatorname }]
+}
+let formRef = ref<any>()
 </script>
 
 <style scoped>
